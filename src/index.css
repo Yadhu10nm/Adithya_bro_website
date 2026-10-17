@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap');
+
+:root {
+  --primary-pink: #e11d48;
+  --secondary-pink: #ffe4e6;
+  --primary-blue: #2563eb;
+  --secondary-blue: #dbeafe;
+  --sky-blue: #38bdf8;
+  --accent-gold: #d97706;
+  --text-dark: #1e1b4b;
+  --text-muted: #334155;
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --card-border: rgba(244, 114, 182, 0.35);
+  --focus-ring: #2563eb;
+
+  font-family: 'Outfit', 'Quicksand', system-ui, -apple-system, sans-serif;
+  color: var(--text-dark);
+  background: linear-gradient(135deg, #ffd1dc 0%, #e0e7ff 50%, #bae6fd 100%);
+  min-height: 100vh;
+  min-height: 100svh;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #ffd5e5 0%, #e0e7ff 45%, #cbebff 100%);
+  background-attachment: fixed;
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility Focus States */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--primary-pink);
+  outline-offset: 2px;
+}
+
+/* Responsive Root */
+#root {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

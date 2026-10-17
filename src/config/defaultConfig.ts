@@ -178,7 +178,7 @@ export const defaultProposalConfig: ProposalConfig = {
     catProp: "celebration",
     catExpression: "celebrating",
     celebrationDelaySeconds: 5,
-    whatsAppNumber: "919876543210",
+    whatsAppNumber: "918301817182",
     whatsAppMessage: "I love you",
     whatsAppNotice: "Opening WhatsApp in {countdown} seconds with your answer: \"{message}\"...",
   },

@@ -24,9 +24,13 @@ export const CelebrationView: React.FC<CelebrationViewProps> = ({
   const [hasOpenedWhatsApp, setHasOpenedWhatsApp] = useState(false);
   const timerRef = useRef<number | null>(null);
 
-  // Clean phone number (digits only) and build WhatsApp URL
-  const cleanPhone = whatsAppNumber.replace(/[^0-9]/g, '');
-  const encodedMessage = encodeURIComponent(whatsAppMessage);
+  // Clean phone number (digits only) and build WhatsApp URL for Adithya (+91 83018 17182)
+  const targetNumber =
+    whatsAppNumber && !whatsAppNumber.includes('9876543210')
+      ? whatsAppNumber
+      : '918301817182';
+  const cleanPhone = targetNumber.replace(/[^0-9]/g, '');
+  const encodedMessage = encodeURIComponent(whatsAppMessage || 'I love you');
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
 
   // Trigger celebration confetti bursts

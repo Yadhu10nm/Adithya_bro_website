@@ -33,15 +33,18 @@ export function App() {
     config.questions[0]?.catExpression || 'curious'
   );
 
-  // Try fetching public/config.json in case user modified it directly
+  // Try fetching public/config.json with cache busting
   useEffect(() => {
-    fetch('/config.json')
+    fetch(`/config.json?v=${Date.now()}`, { cache: 'no-store' })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error('No public config found');
       })
       .then((data: ProposalConfig) => {
         if (data && data.questions && data.proposal) {
+          if (!data.yesResponse?.whatsAppNumber || data.yesResponse.whatsAppNumber.includes('9876543210')) {
+            data.yesResponse.whatsAppNumber = '918301817182';
+          }
           setConfig(data);
         }
       })

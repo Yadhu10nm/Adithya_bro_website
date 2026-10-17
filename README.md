@@ -141,7 +141,7 @@ All editable text, questions, WhatsApp details, cat props, and music settings ar
     "catProp": "celebration",
     "catExpression": "celebrating",
     "celebrationDelaySeconds": 5,
-    "whatsAppNumber": "919876543210",       // Replace with your international number (no '+' sign)
+    "whatsAppNumber": "918301817182",       // Adithya's WhatsApp number (+91 83018 17182)
     "whatsAppMessage": "I love you"          // URL-encoded automatically!
   },
   "noResponse": {

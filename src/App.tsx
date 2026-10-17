@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import initialConfig from './config/proposalConfig.json';
+import { defaultProposalConfig } from './config/defaultConfig';
 import type { ProposalConfig, CatPropType, CatExpressionType, QuestionOption } from './types/config';
 import { Cat3DCanvas } from './components/Cat3DCanvas';
 import { QuestionCard } from './components/QuestionCard';
@@ -15,7 +15,7 @@ import { saveAnswerToServer, downloadAnswersAsJson } from './utils/answerStorage
 import './App.css';
 
 export function App() {
-  const [config, setConfig] = useState<ProposalConfig>(initialConfig as ProposalConfig);
+  const [config, setConfig] = useState<ProposalConfig>(defaultProposalConfig);
   const [showIntro, setShowIntro] = useState<boolean>(config.introScreen?.enabled ?? true);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, QuestionOption>>({});

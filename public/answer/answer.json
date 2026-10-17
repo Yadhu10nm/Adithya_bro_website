@@ -1,10 +1,8 @@
 {
-  "questions": [],
-  "music": {
-    "src": "/audio/romantic-song.mp3"
-  },
-  "whatsapp": {
-    "number": "",
-    "message": "I love you"
-  }
+  "lastUpdated": null,
+  "partnerName": "Aparna",
+  "senderName": "Adithya",
+  "proposalDecision": "pending",
+  "totalAnswered": 0,
+  "responses": []
 }

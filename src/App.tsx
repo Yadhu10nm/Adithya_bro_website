@@ -277,11 +277,11 @@ export function App() {
           type="button"
           onClick={() => downloadAnswersAsJson()}
           className="download-answers-badge"
-          title="Download answers.json with all recorded question answers"
-          aria-label="Download answers.json"
+          title="Download answer.json with all recorded question answers"
+          aria-label="Download answer.json"
         >
           <FileText size={12} className="text-rose-500" />
-          <span>answers.json</span>
+          <span>./answer/answer.json</span>
         </button>
       </footer>
     </div>

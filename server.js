@@ -13,9 +13,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-const answersFilePath = path.join(__dirname, 'answers.json');
-const publicAnswersPath = path.join(__dirname, 'public', 'answers.json');
-const distAnswersPath = path.join(__dirname, 'dist', 'answers.json');
+const answersFilePath = path.join(__dirname, 'answer', 'answer.json');
+const publicAnswersPath = path.join(__dirname, 'public', 'answer', 'answer.json');
+const distAnswersPath = path.join(__dirname, 'dist', 'answer', 'answer.json');
 
 const configFilePath = path.join(__dirname, 'src', 'config', 'proposalConfig.json');
 const publicConfigPath = path.join(__dirname, 'public', 'config.json');
@@ -29,7 +29,7 @@ function getStoredAnswers() {
       return JSON.parse(data);
     }
   } catch (err) {
-    console.error('Error reading answers.json:', err);
+    console.error('Error reading answer/answer.json:', err);
   }
   return {
     lastUpdated: null,
@@ -44,24 +44,30 @@ function getStoredAnswers() {
 // Helper to write answers to all relevant target locations
 function saveStoredAnswers(data) {
   const jsonStr = JSON.stringify(data, null, 2);
+
+  // Ensure answer/ directory exists
+  const answerDir = path.dirname(answersFilePath);
+  if (!fs.existsSync(answerDir)) fs.mkdirSync(answerDir, { recursive: true });
   fs.writeFileSync(answersFilePath, jsonStr, 'utf-8');
 
-  // Also sync to public/answers.json
+  // Also sync to public/answer/answer.json
   try {
     const pubDir = path.dirname(publicAnswersPath);
     if (!fs.existsSync(pubDir)) fs.mkdirSync(pubDir, { recursive: true });
     fs.writeFileSync(publicAnswersPath, jsonStr, 'utf-8');
   } catch (e) {
-    console.warn('Could not sync to public/answers.json:', e);
+    console.warn('Could not sync to public/answer/answer.json:', e);
   }
 
-  // Also sync to dist/answers.json if built
+  // Also sync to dist/answer/answer.json if built
   try {
+    const distDir = path.dirname(distAnswersPath);
     if (fs.existsSync(path.join(__dirname, 'dist'))) {
+      if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
       fs.writeFileSync(distAnswersPath, jsonStr, 'utf-8');
     }
   } catch (e) {
-    console.warn('Could not sync to dist/answers.json:', e);
+    console.warn('Could not sync to dist/answer/answer.json:', e);
   }
 }
 
@@ -128,10 +134,10 @@ app.get('/api/answers', (req, res) => {
   res.json(data);
 });
 
-// API: Download answers.json directly
+// API: Download answer.json directly
 app.get('/api/answers/download', (req, res) => {
   if (fs.existsSync(answersFilePath)) {
-    res.download(answersFilePath, 'aparna_adithya_answers.json');
+    res.download(answersFilePath, 'answer.json');
   } else {
     res.status(404).json({ error: 'No answers file found yet.' });
   }
@@ -179,11 +185,11 @@ app.post('/api/update-config', (req, res) => {
 const distPath = path.join(__dirname, 'dist');
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
-  app.get('*', (req, res) => {
+  app.use((req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 } else {
-  app.get('/', (req, res) => {
+  app.use((req, res) => {
     res.send('Project running in API mode. Run "npm run build" to generate the frontend dist.');
   });
 }

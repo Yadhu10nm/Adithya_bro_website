@@ -197,6 +197,53 @@ To add a question, add a new object to the `questions` array. To remove one, sim
 
 ---
 
+## 💾 Automatic Answer Storage (`./answer/answer.json`)
+
+Whenever Aparna answers a question or makes the final proposal decision (Yes/No), her responses are **automatically captured and saved into `./answer/answer.json` in the project directory** (as well as mirrored to `public/answer/answer.json` and browser `localStorage`).
+
+### JSON File Format (`./answer/answer.json`)
+```json
+{
+  "lastUpdated": "2026-10-17T23:25:00.000Z",
+  "partnerName": "Aparna",
+  "senderName": "Adithya",
+  "proposalDecision": "yes",
+  "totalAnswered": 5,
+  "responses": [
+    {
+      "questionId": "q1",
+      "question": "Aparna, do you remember the moment our story first began?",
+      "answerId": "q1_opt1",
+      "answer": "Yes! Like it was yesterday 💕",
+      "timestamp": "2026-10-17T23:24:10.000Z"
+    },
+    {
+      "questionId": "final_proposal",
+      "question": "Will you be my wife?",
+      "answerId": "yes",
+      "answer": "Yes, a thousand times yes! 💍💖",
+      "timestamp": "2026-10-17T23:25:00.000Z"
+    }
+  ]
+}
+```
+
+### How to Run in Production (with live file saving)
+```bash
+# 1. Build the frontend
+npm run build
+
+# 2. Start the production server
+npm start
+```
+The production server (`server.js`) will:
+- Serve the compiled website on `http://localhost:3000` (or `process.env.PORT`).
+- Update `./answer/answer.json` in the project directory in real-time as answers arrive (`POST /api/save-answer`).
+- Provide API access at `GET /api/answers` and direct file download at `GET /api/answers/download`.
+- Allow updating the questions configuration dynamically in production via `POST /api/update-config`.
+
+---
+
 ## 📱 Mobile & Accessibility Verification
 
 - **Responsive Touch Targets**: Buttons have a minimum height of 48px to 58px for comfortable tapping on phones.

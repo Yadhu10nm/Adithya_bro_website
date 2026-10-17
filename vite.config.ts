@@ -8,10 +8,10 @@ function answersApiPlugin(): Plugin {
     name: 'answers-api-plugin',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const answersFilePath = path.resolve(__dirname, 'answers.json');
-        const publicAnswersPath = path.resolve(__dirname, 'public/answers.json');
-        const publicConfigPath = path.resolve(__dirname, 'public/config.json');
-        const srcConfigPath = path.resolve(__dirname, 'src/config/proposalConfig.json');
+        const answersFilePath = path.resolve(process.cwd(), 'answer/answer.json');
+        const publicAnswersPath = path.resolve(process.cwd(), 'public/answer/answer.json');
+        const publicConfigPath = path.resolve(process.cwd(), 'public/config.json');
+        const srcConfigPath = path.resolve(process.cwd(), 'src/config/proposalConfig.json');
 
         if (req.url === '/api/save-answer' && req.method === 'POST') {
           let body = '';
@@ -60,11 +60,14 @@ function answersApiPlugin(): Plugin {
 
               currentData.totalAnswered = currentData.responses.length;
               const jsonStr = JSON.stringify(currentData, null, 2);
+
+              const answerDir = path.dirname(answersFilePath);
+              if (!fs.existsSync(answerDir)) fs.mkdirSync(answerDir, { recursive: true });
               fs.writeFileSync(answersFilePath, jsonStr, 'utf-8');
 
-              if (fs.existsSync(path.dirname(publicAnswersPath))) {
-                fs.writeFileSync(publicAnswersPath, jsonStr, 'utf-8');
-              }
+              const pubAnsDir = path.dirname(publicAnswersPath);
+              if (!fs.existsSync(pubAnsDir)) fs.mkdirSync(pubAnsDir, { recursive: true });
+              fs.writeFileSync(publicAnswersPath, jsonStr, 'utf-8');
 
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = 200;
@@ -92,7 +95,7 @@ function answersApiPlugin(): Plugin {
           if (fs.existsSync(answersFilePath)) {
             res.setHeader(
               'Content-Disposition',
-              'attachment; filename="aparna_adithya_answers.json"'
+              'attachment; filename="answer.json"'
             );
             res.setHeader('Content-Type', 'application/json');
             res.end(fs.readFileSync(answersFilePath));

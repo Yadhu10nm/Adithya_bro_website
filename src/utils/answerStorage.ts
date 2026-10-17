@@ -133,7 +133,7 @@ export function downloadAnswersAsJson(data?: AnswersFileData) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'aparna_adithya_answers.json';
+  a.download = 'answer.json';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

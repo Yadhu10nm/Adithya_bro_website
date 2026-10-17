@@ -1,3 +1,10 @@
 {
-  
+  "questions": [],
+  "music": {
+    "src": "/audio/romantic-song.mp3"
+  },
+  "whatsapp": {
+    "number": "",
+    "message": "I love you"
+  }
 }
